@@ -5,6 +5,9 @@ import net.minestom.server.network.PlayerProvider;
 import net.minestom.server.network.player.PlayerConnection;
 import net.sacredisle.rpgengine.api.exception.AlreadyRunningException;
 import net.sacredisle.rpgengine.api.name.Username;
+import net.sacredisle.rpgengine.core.command.GenerateInstanceCommand;
+import net.sacredisle.rpgengine.core.command.InstancesCommand;
+import net.sacredisle.rpgengine.core.command.SwitchInstanceCommand;
 import net.sacredisle.rpgengine.core.player.RPGPlayer;
 import net.sacredisle.rpgengine.core.player.RPGPlayerProvider;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +28,10 @@ public class TestBootstrap {
                     "ocean",
                     "debug"
             }, new RPGPlayerProvider());
+
+            rpgEngine.registerCommand(new GenerateInstanceCommand());
+            rpgEngine.registerCommand(new SwitchInstanceCommand());
+            rpgEngine.registerCommand(new InstancesCommand());
         } catch (BindException | AlreadyRunningException e) {
             e.printStackTrace();
         }

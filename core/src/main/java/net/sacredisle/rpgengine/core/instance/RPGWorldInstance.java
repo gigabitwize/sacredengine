@@ -1,16 +1,14 @@
 package net.sacredisle.rpgengine.core.instance;
 
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.Player;
 import net.minestom.server.instance.IChunkLoader;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.world.DimensionType;
 import net.sacredisle.rpgengine.api.instance.IRPGInstance;
-import net.sacredisle.rpgengine.api.player.IRPGPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -19,13 +17,34 @@ import java.util.UUID;
 public class RPGWorldInstance extends InstanceContainer implements IRPGInstance {
 
     private Pos spawn;
+    private String displayName;
+    private final String name;
 
     public RPGWorldInstance(@NotNull UUID uniqueId,
                             @NotNull DimensionType dimensionType,
                             @Nullable IChunkLoader loader,
-                            @NotNull Pos spawn) {
+                            @NotNull Pos spawn,
+                            @NotNull String name,
+                            @Nullable String displayName) {
         super(uniqueId, dimensionType, loader);
         this.spawn = spawn;
+        this.name = name;
+        this.displayName = Objects.requireNonNullElseGet(displayName, () -> this.name);
+    }
+
+    @Override
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    @Override
+    public String getLiveName() {
+        return name;
+    }
+
+    @Override
+    public String getLiveDisplayName() {
+        return displayName;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.sacredisle.rpgengine.api;
 
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.builder.Command;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.instance.ChunkGenerator;
 import net.minestom.server.instance.Instance;
@@ -56,7 +57,10 @@ public interface Engine {
      */
     String getRunningIP();
 
-
+    /**
+     * Registers a {@link Command}.
+     */
+    void registerCommand(Command command);
 
     /**
      * Creates a new {@link NamespaceID}.

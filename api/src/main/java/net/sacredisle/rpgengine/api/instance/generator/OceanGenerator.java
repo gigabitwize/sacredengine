@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Giovanni on 1/4/2022
  */
-public class OceanGenerator implements ChunkGenerator, Generator {
+public class OceanGenerator implements Generator {
 
     @Override
     public void generateChunkData(@NotNull ChunkBatch batch, int chunkX, int chunkZ) {

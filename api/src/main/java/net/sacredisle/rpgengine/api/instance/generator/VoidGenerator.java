@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Giovanni on 1/4/2022
  */
-public class VoidGenerator implements ChunkGenerator, Generator {
+public class VoidGenerator implements Generator {
 
     @Override
     public void generateChunkData(@NotNull ChunkBatch batch, int chunkX, int chunkZ) {

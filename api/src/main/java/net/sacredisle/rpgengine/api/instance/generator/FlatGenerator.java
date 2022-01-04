@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Giovanni on 1/4/2022
  */
-public class FlatGenerator implements ChunkGenerator, Generator {
+public class FlatGenerator implements Generator {
 
     private final Block block;
 

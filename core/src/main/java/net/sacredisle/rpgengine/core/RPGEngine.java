@@ -1,6 +1,8 @@
 package net.sacredisle.rpgengine.core;
 
+import com.google.common.collect.Lists;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.builder.Command;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.GlobalEventHandler;
@@ -24,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.BindException;
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -33,7 +36,7 @@ public class RPGEngine implements Engine {
 
     public static final Logger LOG = LoggerFactory.getLogger(RPGEngine.class);
 
-    private static final DimensionType DEFAULT_DIMENSION = DimensionType
+    public static final DimensionType DEFAULT_DIMENSION = DimensionType
             .builder(Engine.createNamespaceId("default_dimension"))
             .ambientLight(0.75F) // Default is 0.5, make it slightly higher
             .piglinSafe(true)
@@ -43,7 +46,7 @@ public class RPGEngine implements Engine {
     private final String ip;
     private final int port;
     private final MinecraftServer minecraftServer;
-    private final ChunkGenerator defaultGenerator;
+    private final Generator defaultGenerator;
     private final RPGWorldInstance mainInstance;
 
     public RPGEngine(String[] args, PlayerProvider playerProvider) throws BindException, AlreadyRunningException {
@@ -70,7 +73,12 @@ public class RPGEngine implements Engine {
 
         /* Main Instance generation */
         MinecraftServer.getDimensionTypeManager().addDimension(DEFAULT_DIMENSION);
-        mainInstance = new RPGWorldInstance(UUID.randomUUID(), DEFAULT_DIMENSION, null, new Pos(0, ((Generator) defaultGenerator).getSpawnY(), 0));
+        mainInstance = new RPGWorldInstance(
+                UUID.randomUUID(),
+                DEFAULT_DIMENSION,
+                null,
+                new Pos(0,  defaultGenerator.getSpawnY(), 0),
+                "Sacrisle", null);
         mainInstance.setChunkGenerator(defaultGenerator);
         MinecraftServer.getInstanceManager().registerInstance(mainInstance);
 
@@ -101,6 +109,11 @@ public class RPGEngine implements Engine {
         Engine.set(null);
         MinecraftServer.stopCleanly();
         return StopResult.SUCCESS;
+    }
+
+    @Override
+    public void registerCommand(Command command) {
+        MinecraftServer.getCommandManager().register(command);
     }
 
     @Override
