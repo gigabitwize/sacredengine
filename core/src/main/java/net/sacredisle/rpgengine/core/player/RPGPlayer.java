@@ -13,6 +13,7 @@ public class RPGPlayer extends Player implements IRPGPlayer {
 
     private final Username username;
     private String displayName;
+    private int exp, level = 1;
 
     public RPGPlayer(Username username, @NotNull PlayerConnection playerConnection) {
         super(username.getId(), username.getLastName(), playerConnection);
@@ -20,9 +21,26 @@ public class RPGPlayer extends Player implements IRPGPlayer {
         this.displayName = username.getLastName();
     }
 
+    /**
+     * Adds experience to this player.
+     */
+    public void addExperience(int amount) {
+        this.exp += amount;
+    }
+
     @Override
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    @Override
+    public void setRPGLevel(int level) {
+        this.level = level;
+    }
+
+    @Override
+    public void setRPGExperience(int experience) {
+        this.exp = experience;
     }
 
     @Override
@@ -38,5 +56,15 @@ public class RPGPlayer extends Player implements IRPGPlayer {
     @Override
     public String getLiveDisplayName() {
         return displayName;
+    }
+
+    @Override
+    public int getRPGExp() {
+        return exp;
+    }
+
+    @Override
+    public int getRPGLevel() {
+        return level;
     }
 }

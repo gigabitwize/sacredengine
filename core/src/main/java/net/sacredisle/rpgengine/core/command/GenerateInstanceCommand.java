@@ -65,5 +65,4 @@ public class GenerateInstanceCommand extends Command {
                                     .text(" has been created").color(NamedTextColor.GREEN))));
         }, argumentString, typeArg);
     }
-
 }

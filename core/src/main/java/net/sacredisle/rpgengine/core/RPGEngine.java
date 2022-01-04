@@ -5,6 +5,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.EventListener;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
@@ -21,7 +23,9 @@ import net.sacredisle.rpgengine.api.instance.generator.FlatGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.Generator;
 import net.sacredisle.rpgengine.api.instance.generator.OceanGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.VoidGenerator;
+import net.sacredisle.rpgengine.core.entity.EntityChecker;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +85,7 @@ public class RPGEngine implements Engine {
                 "Sacrisle", null);
         mainInstance.setChunkGenerator(defaultGenerator);
         MinecraftServer.getInstanceManager().registerInstance(mainInstance);
+        getEventHandler().addListener(new EntityChecker());
 
         /* Auth */
         MojangAuth.init();
@@ -98,6 +103,7 @@ public class RPGEngine implements Engine {
             if (args[3].equalsIgnoreCase("debug"))
                 event.getPlayer().setGameMode(GameMode.CREATIVE);
         });
+
 
         /* Start */
         minecraftServer.start(ip, port);
