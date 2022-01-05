@@ -5,6 +5,7 @@ import net.minestom.server.network.PlayerProvider;
 import net.minestom.server.network.player.PlayerConnection;
 import net.sacredisle.rpgengine.api.exception.AlreadyRunningException;
 import net.sacredisle.rpgengine.api.name.Username;
+import net.sacredisle.rpgengine.core.command.EntityCommand;
 import net.sacredisle.rpgengine.core.command.GenerateInstanceCommand;
 import net.sacredisle.rpgengine.core.command.InstancesCommand;
 import net.sacredisle.rpgengine.core.command.SwitchInstanceCommand;
@@ -32,6 +33,7 @@ public class TestBootstrap {
             rpgEngine.registerCommand(new GenerateInstanceCommand());
             rpgEngine.registerCommand(new SwitchInstanceCommand());
             rpgEngine.registerCommand(new InstancesCommand());
+            rpgEngine.registerCommand(new EntityCommand());
         } catch (BindException | AlreadyRunningException e) {
             e.printStackTrace();
         }

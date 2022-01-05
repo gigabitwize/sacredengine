@@ -21,23 +21,25 @@ public class RPGCreature extends EntityCreature implements IRPGCreature {
     private String customName;
     private final String entityName;
 
-    public RPGCreature(@NotNull EntityType entityType, String entityName, String customName) {
+    public RPGCreature(@NotNull EntityType entityType, int level, String entityName, String customName) {
         super(entityType, UUID.randomUUID());
+        this.level = level;
         this.entityName = entityName;
         this.customName = customName;
+        setDisplayName(customName);
     }
 
     @Override
     public void setDisplayName(String str) {
         /* [Lvl. XXX] NAME */
         this.customName = str;
-        this.setCustomName(Component.text("[Lvl. ")
-                .append(Component.text(level))
-                .append(Component.text("]"))
-                .color(NamedTextColor.GOLD)
-                .append(Component.text(str))
-                .color(NamedTextColor.RED));
+        getEntityMeta().setNotifyAboutChanges(false);
+        this.setCustomName(Component.text("[Lvl. ").color(NamedTextColor.GOLD)
+                .append(Component.text(level).color(NamedTextColor.GOLD))
+                .append(Component.text("] ").color(NamedTextColor.GOLD))
+                .append(Component.text(str).color(NamedTextColor.RED)));
         this.setCustomNameVisible(true);
+        getEntityMeta().setNotifyAboutChanges(true);
     }
 
     @Override

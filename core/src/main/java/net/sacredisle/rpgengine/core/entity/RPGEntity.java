@@ -1,6 +1,7 @@
 package net.sacredisle.rpgengine.core.entity;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.sacredisle.rpgengine.api.entity.IRPGEntity;
@@ -28,9 +29,12 @@ public class RPGEntity extends LivingEntity implements IRPGEntity {
 
     @Override
     public void setDisplayName(String str) {
+        /* [Lvl. XXX] NAME */
         this.customName = str;
-        this.setCustomName(Component.text(str));
+        getEntityMeta().setNotifyAboutChanges(false);
+        this.setCustomName(Component.text(str).color(NamedTextColor.RED));
         this.setCustomNameVisible(true);
+        getEntityMeta().setNotifyAboutChanges(true);
     }
 
     @Override
