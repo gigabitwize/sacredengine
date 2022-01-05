@@ -1,4 +1,4 @@
-package net.sacredisle.rpgengine.core.entity.human;
+package net.sacredisle.rpgengine.core.human;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -15,26 +15,17 @@ public class RPGHumanCreature extends RPGHuman implements Advancing {
 
     private int level;
 
-    public RPGHumanCreature(@NotNull RPGWorldInstance instance, @NotNull Pos spawnPosition,@NotNull String entityName, @NotNull TextComponent customName) {
-        super(instance, spawnPosition, entityName, customName);
+    public RPGHumanCreature(@NotNull RPGWorldInstance instance, @NotNull Pos spawnPosition, @NotNull HumanProfile profile) {
+        super(instance, spawnPosition, profile);
     }
 
     @Override
     public void setDisplayName(TextComponent str) {
-        this.customName = str;
-        getEntityMeta().setNotifyAboutChanges(false);
-        this.setCustomName(Component.text("[Lvl. ").color(NamedTextColor.GOLD)
-                .append(Component.text(level).color(NamedTextColor.GOLD))
-                .append(Component.text("] ").color(NamedTextColor.GOLD))
-                .append(str));
-        this.setCustomNameVisible(true);
-        getEntityMeta().setNotifyAboutChanges(true);
     }
 
     @Override
     public void setRPGLevel(int level) {
         this.level = level;
-        setDisplayName(customName); // Update
     }
 
     @Override

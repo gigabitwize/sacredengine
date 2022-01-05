@@ -21,7 +21,7 @@ import net.sacredisle.rpgengine.api.instance.generator.Generator;
 import net.sacredisle.rpgengine.api.instance.generator.OceanGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.VoidGenerator;
 import net.sacredisle.rpgengine.core.entity.EntityChecker;
-import net.sacredisle.rpgengine.core.entity.human.RPGHuman;
+import net.sacredisle.rpgengine.core.human.RPGHuman;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import net.sacredisle.rpgengine.core.ping.DefaultPingHandler;
 import net.sacredisle.rpgengine.core.tag.Tags;

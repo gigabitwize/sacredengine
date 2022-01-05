@@ -6,17 +6,18 @@ import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.condition.Conditions;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.ai.EntityAIGroupBuilder;
 import net.minestom.server.entity.ai.goal.RandomLookAroundGoal;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
-import net.minestom.server.entity.fakeplayer.FakePlayer;
-import net.minestom.server.entity.fakeplayer.FakePlayerOption;
-import net.minestom.server.tag.Tag;
+import net.sacredisle.rpgengine.api.Query;
 import net.sacredisle.rpgengine.core.entity.RPGCreature;
-import net.sacredisle.rpgengine.core.entity.human.RPGHuman;
-import net.sacredisle.rpgengine.core.entity.human.RPGHumanCreature;
+import net.sacredisle.rpgengine.core.human.HumanProfile;
+import net.sacredisle.rpgengine.core.human.RPGHuman;
+import net.sacredisle.rpgengine.core.human.RPGHumanCreature;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import net.sacredisle.rpgengine.core.player.RPGPlayer;
+import net.sacredisle.rpgengine.core.skin.SkinResolver;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -72,23 +73,35 @@ public class EntityCommand extends Command {
             setCondition(Conditions::playerOnly);
             setDefaultExecutor((sender, context) -> {
                 sender.sendMessage("");
-                sender.sendMessage(Component.text("Incorrect syntax, use: /entity human <name> [level]").color(NamedTextColor.RED));
+                sender.sendMessage(Component.text("Incorrect syntax, use: /entity human <name> <userSkin> [level]").color(NamedTextColor.RED));
             });
 
             addSyntax(((sender, context) -> {
                 RPGPlayer player = (RPGPlayer) sender;
 
                 String name = context.get("name");
+                String userSkin = context.get("userSkin");
                 int level = context.get("level");
+                HumanProfile profile = new HumanProfile(name, SkinResolver.get().resolve(new Query<UUID, String>() {
+                    @Override
+                    public UUID getA() {
+                        return null;
+                    }
+
+                    @Override
+                    public String getB() {
+                        return userSkin;
+                    }
+                }));
 
                 RPGHuman human = null;
                 if (level < 0)
-                    human = new RPGHuman((RPGWorldInstance) player.getInstance(), player.getPosition(), name, Component.text(name));
+                    human = new RPGHuman((RPGWorldInstance) player.getInstance(), player.getPosition(), profile);
                 else {
-                    human = new RPGHumanCreature((RPGWorldInstance) player.getInstance(), player.getPosition(), name, Component.text(name));
+                    human = new RPGHumanCreature((RPGWorldInstance) player.getInstance(), player.getPosition(), profile);
                     ((RPGHumanCreature) human).setRPGLevel(level);
                 }
-            }), ArgumentType.String("name"), ArgumentType.Integer("level").setDefaultValue(-1));
+            }), ArgumentType.String("name"), ArgumentType.String("userSkin"), ArgumentType.Integer("level").setDefaultValue(-1));
         }
     }
 }

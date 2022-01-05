@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * Created by Giovanni on 1/4/2022
  *
- * An entity object that requires no AI and navigation. For example
+ * A base entity object that requires no AI and navigation. For example
  * static NPCs or other kinds of entities that don't require any actual
  * behaviour.
  */
