@@ -1,5 +1,7 @@
 package net.sacredisle.rpgengine.api.name;
 
+import net.kyori.adventure.text.TextComponent;
+
 /**
  * Created by Giovanni on 1/4/2022
  *
@@ -15,10 +17,10 @@ public interface Named {
     /**
      * Returns the display name.
      */
-    String getLiveDisplayName();
+    TextComponent getLiveDisplayName();
 
     /**
      * Sets the display name.
      */
-    void setDisplayName(String str);
+    void setDisplayName(TextComponent str);
 }

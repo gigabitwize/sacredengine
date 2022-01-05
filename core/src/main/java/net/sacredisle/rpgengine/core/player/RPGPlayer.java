@@ -1,5 +1,7 @@
 package net.sacredisle.rpgengine.core.player;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.player.PlayerConnection;
 import net.sacredisle.rpgengine.api.name.Username;
@@ -12,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 public class RPGPlayer extends Player implements IRPGPlayer {
 
     private final Username username;
-    private String displayName;
+    private TextComponent displayName;
     private int exp, level = 1;
 
     public RPGPlayer(Username username, @NotNull PlayerConnection playerConnection) {
         super(username.getId(), username.getLastName(), playerConnection);
         this.username = username;
-        this.displayName = username.getLastName();
+        this.displayName = Component.text(username.getLastName());
     }
 
     /**
@@ -29,7 +31,7 @@ public class RPGPlayer extends Player implements IRPGPlayer {
     }
 
     @Override
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(TextComponent displayName) {
         this.displayName = displayName;
     }
 
@@ -54,7 +56,7 @@ public class RPGPlayer extends Player implements IRPGPlayer {
     }
 
     @Override
-    public String getLiveDisplayName() {
+    public TextComponent getLiveDisplayName() {
         return displayName;
     }
 

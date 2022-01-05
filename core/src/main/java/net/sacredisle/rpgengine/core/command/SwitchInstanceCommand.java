@@ -37,7 +37,7 @@ public class SwitchInstanceCommand extends Command {
                     rpgPlayer.setInstance(rpgInstance, rpgInstance.getSpawn());
                     sender.sendMessage("");
                     rpgPlayer.sendMessage(Component.text("You have been teleported to ").color(NamedTextColor.GREEN)
-                            .append(Component.text(rpgInstance.getLiveDisplayName()).color(NamedTextColor.DARK_AQUA)));
+                            .append(rpgInstance.getLiveDisplayName()).color(NamedTextColor.DARK_AQUA));
                     break;
                 }
             }

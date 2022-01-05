@@ -1,38 +1,26 @@
-package net.sacredisle.rpgengine.core.entity;
+package net.sacredisle.rpgengine.core.entity.human;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minestom.server.entity.EntityCreature;
-import net.minestom.server.entity.EntityType;
-import net.sacredisle.rpgengine.api.entity.IRPGCreature;
+import net.minestom.server.coordinate.Pos;
+import net.sacredisle.rpgengine.api.Advancing;
+import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
- * Created by Giovanni on 1/4/2022
- *
- * An entity object that has support for navigation and AI. Can be
- * ANY entity type.
+ * Created by Giovanni on 1/5/2022
  */
-public class RPGCreature extends EntityCreature implements IRPGCreature {
+public class RPGHumanCreature extends RPGHuman implements Advancing {
 
-    private int level = 1;
-    private TextComponent customName;
-    private final String entityName;
+    private int level;
 
-    public RPGCreature(@NotNull EntityType entityType, int level, String entityName, TextComponent customName) {
-        super(entityType, UUID.randomUUID());
-        this.level = level;
-        this.entityName = entityName;
-        this.customName = customName;
-        setDisplayName(customName);
+    public RPGHumanCreature(@NotNull RPGWorldInstance instance, @NotNull Pos spawnPosition,@NotNull String entityName, @NotNull TextComponent customName) {
+        super(instance, spawnPosition, entityName, customName);
     }
 
     @Override
     public void setDisplayName(TextComponent str) {
-        /* [Lvl. XXX] NAME */
         this.customName = str;
         getEntityMeta().setNotifyAboutChanges(false);
         this.setCustomName(Component.text("[Lvl. ").color(NamedTextColor.GOLD)
@@ -46,12 +34,12 @@ public class RPGCreature extends EntityCreature implements IRPGCreature {
     @Override
     public void setRPGLevel(int level) {
         this.level = level;
+        setDisplayName(customName); // Update
     }
 
     @Override
     @Deprecated
     public void setRPGExperience(int experience) {
-
     }
 
     @Override
@@ -62,15 +50,5 @@ public class RPGCreature extends EntityCreature implements IRPGCreature {
     @Override
     public int getRPGLevel() {
         return level;
-    }
-
-    @Override
-    public String getLiveName() {
-        return entityName;
-    }
-
-    @Override
-    public TextComponent getLiveDisplayName() {
-        return customName;
     }
 }

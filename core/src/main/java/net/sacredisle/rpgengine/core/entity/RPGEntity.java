@@ -1,6 +1,7 @@
 package net.sacredisle.rpgengine.core.entity;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
@@ -18,21 +19,20 @@ import java.util.UUID;
  */
 public class RPGEntity extends LivingEntity implements IRPGEntity {
 
-    private String customName;
+    private TextComponent customName;
     private final String entityName;
 
-    public RPGEntity(@NotNull EntityType entityType, String entityName, String customName) {
+    public RPGEntity(@NotNull EntityType entityType, String entityName, TextComponent customName) {
         super(entityType, UUID.randomUUID());
         this.entityName = entityName;
         this.customName = customName;
     }
 
     @Override
-    public void setDisplayName(String str) {
-        /* [Lvl. XXX] NAME */
+    public void setDisplayName(TextComponent str) {
         this.customName = str;
         getEntityMeta().setNotifyAboutChanges(false);
-        this.setCustomName(Component.text(str).color(NamedTextColor.RED));
+        this.setCustomName(str);
         this.setCustomNameVisible(true);
         getEntityMeta().setNotifyAboutChanges(true);
     }
@@ -43,7 +43,7 @@ public class RPGEntity extends LivingEntity implements IRPGEntity {
     }
 
     @Override
-    public String getLiveDisplayName() {
+    public TextComponent getLiveDisplayName() {
         return customName;
     }
 }

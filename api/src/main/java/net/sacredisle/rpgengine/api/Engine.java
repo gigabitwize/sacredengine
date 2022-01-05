@@ -8,6 +8,7 @@ import net.minestom.server.instance.Instance;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.DimensionType;
 import net.sacredisle.rpgengine.api.instance.IRPGInstance;
+import net.sacredisle.rpgengine.api.ping.PingHandler;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -17,6 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public interface Engine {
 
     AtomicReference<Engine> REFERENCE = new AtomicReference<>();
+    AtomicReference<String> BUILD_VERSION = new AtomicReference<>("0.0.1");
 
     /**
      * Returns the {@link MinecraftServer}.
@@ -48,6 +50,11 @@ public interface Engine {
     DimensionType getDefaultDimension();
 
     /**
+     * Returns the {@link PingHandler}.
+     */
+    PingHandler getPingHandler();
+
+    /**
      * Returns the port the {@link #getMinecraftServer()} is running on.
      */
     int getRunningPort();
@@ -75,5 +82,12 @@ public interface Engine {
 
     static Engine get() {
         return REFERENCE.get();
+    }
+
+    /**
+     * Returns the current version of the engine.
+     */
+    static String getBuildVersion() {
+        return BUILD_VERSION.get();
     }
 }

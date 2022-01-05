@@ -1,12 +1,9 @@
 package net.sacredisle.rpgengine.core;
 
-import com.google.common.collect.Lists;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.GameMode;
-import net.minestom.server.event.Event;
-import net.minestom.server.event.EventListener;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
@@ -24,13 +21,14 @@ import net.sacredisle.rpgengine.api.instance.generator.Generator;
 import net.sacredisle.rpgengine.api.instance.generator.OceanGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.VoidGenerator;
 import net.sacredisle.rpgengine.core.entity.EntityChecker;
+import net.sacredisle.rpgengine.core.entity.human.RPGHuman;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
-import org.jetbrains.annotations.NotNull;
+import net.sacredisle.rpgengine.core.ping.DefaultPingHandler;
+import net.sacredisle.rpgengine.core.tag.Tags;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.BindException;
-import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -38,8 +36,8 @@ import java.util.UUID;
  */
 public class RPGEngine implements Engine {
 
+    public static int MAX_PLAYERS = 100;
     public static final Logger LOG = LoggerFactory.getLogger(RPGEngine.class);
-
     public static final DimensionType DEFAULT_DIMENSION = DimensionType
             .builder(Engine.createNamespaceId("default_dimension"))
             .ambientLight(0.75F) // Default is 0.5, make it slightly higher
@@ -52,6 +50,7 @@ public class RPGEngine implements Engine {
     private final MinecraftServer minecraftServer;
     private final Generator defaultGenerator;
     private final RPGWorldInstance mainInstance;
+    private final DefaultPingHandler pingHandler;
 
     public RPGEngine(String[] args, PlayerProvider playerProvider) throws BindException, AlreadyRunningException {
         if (Engine.get() != null)
@@ -59,6 +58,7 @@ public class RPGEngine implements Engine {
         LOG.info("Starting the Sacred Engine..");
 
         Engine.set(this);
+        pingHandler = new DefaultPingHandler();
 
         ip = args[0];
         port = Integer.parseInt(args[1]);
@@ -74,6 +74,7 @@ public class RPGEngine implements Engine {
         else defaultGenerator = new OceanGenerator();
 
         minecraftServer = MinecraftServer.init();
+        getEventHandler().addListener(pingHandler);
 
         /* Main Instance generation */
         MinecraftServer.getDimensionTypeManager().addDimension(DEFAULT_DIMENSION);
@@ -81,7 +82,7 @@ public class RPGEngine implements Engine {
                 UUID.randomUUID(),
                 DEFAULT_DIMENSION,
                 null,
-                new Pos(0,  defaultGenerator.getSpawnY(), 0),
+                new Pos(0, defaultGenerator.getSpawnY(), 0),
                 "Sacrisle", null);
         mainInstance.setChunkGenerator(defaultGenerator);
         MinecraftServer.getInstanceManager().registerInstance(mainInstance);
@@ -91,19 +92,25 @@ public class RPGEngine implements Engine {
         MojangAuth.init();
         MinecraftServer.getConnectionManager().setPlayerProvider(playerProvider);
         getEventHandler().addListener(PlayerLoginEvent.class, event -> {
+            if(event.getPlayer() instanceof RPGHuman) {
+                RPGHuman human = (RPGHuman) event.getPlayer();
+                event.setSpawningInstance(human.getSpawnInstance());
+                return;
+            }
             event.setSpawningInstance(mainInstance);
         });
 
         // TODO idk if event.isFirstSpawn only is true when the player joins for the first time ever
         // TODO if not, get the current spawning instance's spawn pos rather than the main instance's.
         getEventHandler().addListener(PlayerSpawnEvent.class, event -> {
-            if (event.isFirstSpawn())
+            if (event.isFirstSpawn()) {
+                if (event.getPlayer().hasTag(Tags.IGNORE_SPAWN_EVENTS)) return;
                 event.getPlayer().teleport(mainInstance.getSpawn());
+            }
 
             if (args[3].equalsIgnoreCase("debug"))
                 event.getPlayer().setGameMode(GameMode.CREATIVE);
         });
-
 
         /* Start */
         minecraftServer.start(ip, port);
@@ -145,6 +152,11 @@ public class RPGEngine implements Engine {
     @Override
     public ChunkGenerator getDefaultGenerator() {
         return defaultGenerator;
+    }
+
+    @Override
+    public DefaultPingHandler getPingHandler() {
+        return pingHandler;
     }
 
     @Override

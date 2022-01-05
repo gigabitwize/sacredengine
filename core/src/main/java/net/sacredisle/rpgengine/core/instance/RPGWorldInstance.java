@@ -1,5 +1,7 @@
 package net.sacredisle.rpgengine.core.instance;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.IChunkLoader;
 import net.minestom.server.instance.InstanceContainer;
@@ -17,7 +19,7 @@ import java.util.UUID;
 public class RPGWorldInstance extends InstanceContainer implements IRPGInstance {
 
     private Pos spawn;
-    private String displayName;
+    private TextComponent displayName;
     private final String name;
 
     public RPGWorldInstance(@NotNull UUID uniqueId,
@@ -25,15 +27,15 @@ public class RPGWorldInstance extends InstanceContainer implements IRPGInstance 
                             @Nullable IChunkLoader loader,
                             @NotNull Pos spawn,
                             @NotNull String name,
-                            @Nullable String displayName) {
+                            @Nullable TextComponent displayName) {
         super(uniqueId, dimensionType, loader);
         this.spawn = spawn;
         this.name = name;
-        this.displayName = Objects.requireNonNullElseGet(displayName, () -> this.name);
+        this.displayName = Objects.requireNonNullElseGet(displayName, () -> Component.text(this.name));
     }
 
     @Override
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(TextComponent displayName) {
         this.displayName = displayName;
     }
 
@@ -43,7 +45,7 @@ public class RPGWorldInstance extends InstanceContainer implements IRPGInstance 
     }
 
     @Override
-    public String getLiveDisplayName() {
+    public TextComponent getLiveDisplayName() {
         return displayName;
     }
 
