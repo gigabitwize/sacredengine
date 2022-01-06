@@ -14,6 +14,7 @@ import net.minestom.server.network.PlayerProvider;
 import net.minestom.server.world.DimensionType;
 import net.sacredisle.rpgengine.api.Engine;
 import net.sacredisle.rpgengine.api.exception.AlreadyRunningException;
+import net.sacredisle.rpgengine.api.exception.ConnectionNotReadyException;
 import net.sacredisle.rpgengine.api.instance.IRPGInstance;
 import net.sacredisle.rpgengine.api.instance.generator.FlatGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.Generator;
@@ -54,9 +55,13 @@ public class RPGEngine implements Engine {
     private final RPGWorldInstance mainInstance;
     private final DefaultPingHandler pingHandler;
 
-    public RPGEngine(@NotNull Server.Connection forgedConnection, String[] args, @NotNull PlayerProvider playerProvider) throws BindException, AlreadyRunningException {
+    public RPGEngine(@NotNull Server.Connection forgedConnection, String[] args, @NotNull PlayerProvider playerProvider) throws BindException, AlreadyRunningException, ConnectionNotReadyException {
         if (Engine.get() != null)
             throw new AlreadyRunningException("Failed to create RPGEngine, the engine is already running.");
+
+        if(!OpenConnection.isOpen(forgedConnection))
+            throw new ConnectionNotReadyException();
+
         LOG.info("Starting the Sacred Engine..");
 
         Engine.set(this);

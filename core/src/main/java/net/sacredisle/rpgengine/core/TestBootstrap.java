@@ -2,6 +2,7 @@ package net.sacredisle.rpgengine.core;
 
 import net.sacredisle.rpgengine.api.ReturnValue;
 import net.sacredisle.rpgengine.api.exception.AlreadyRunningException;
+import net.sacredisle.rpgengine.api.exception.ConnectionNotReadyException;
 import net.sacredisle.rpgengine.api.server.Address;
 import net.sacredisle.rpgengine.api.server.Server;
 import net.sacredisle.rpgengine.core.command.EntityCommand;
@@ -44,7 +45,7 @@ public class TestBootstrap {
             rpgEngine.registerCommand(new SwitchInstanceCommand());
             rpgEngine.registerCommand(new InstancesCommand());
             rpgEngine.registerCommand(new EntityCommand());
-        } catch (BindException | AlreadyRunningException e) {
+        } catch (BindException | AlreadyRunningException | ConnectionNotReadyException e) {
             e.printStackTrace();
         }
     }
