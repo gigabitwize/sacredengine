@@ -3,7 +3,6 @@ package net.sacredisle.rpgengine.core.command;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentEnum;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
@@ -15,13 +14,14 @@ import net.sacredisle.rpgengine.api.instance.generator.Generator;
 import net.sacredisle.rpgengine.api.instance.generator.GeneratorType;
 import net.sacredisle.rpgengine.core.RPGEngine;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
+import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 
 import java.util.UUID;
 
 /**
  * Created by Giovanni on 1/4/2022
  */
-public class GenerateInstanceCommand extends Command {
+public class GenerateInstanceCommand extends RPGCommand {
 
     public GenerateInstanceCommand() {
         super("generate", "gi", "gen-inst", "gen");
@@ -64,5 +64,10 @@ public class GenerateInstanceCommand extends Command {
                             .text("(" + instanceName + ")").color(NamedTextColor.DARK_AQUA).append(Component
                                     .text(" has been created").color(NamedTextColor.GREEN))));
         }, argumentString, typeArg);
+    }
+
+    @Override
+    public String getPermission() {
+        return CommandPermissions.EXEC_MANAGE_INSTANCES.getPermissionName();
     }
 }

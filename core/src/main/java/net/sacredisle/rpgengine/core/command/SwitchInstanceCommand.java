@@ -3,18 +3,18 @@ package net.sacredisle.rpgengine.core.command;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.condition.Conditions;
 import net.minestom.server.instance.Instance;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
+import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 import net.sacredisle.rpgengine.core.player.RPGPlayer;
 
 /**
  * Created by Giovanni on 1/4/2022
  */
-public class SwitchInstanceCommand extends Command {
+public class SwitchInstanceCommand extends RPGCommand {
 
     public SwitchInstanceCommand() {
         super("switch", "si");
@@ -42,5 +42,10 @@ public class SwitchInstanceCommand extends Command {
                 }
             }
         }, nameArgument);
+    }
+
+    @Override
+    public String getPermission() {
+        return CommandPermissions.EXEC_SWITCH_INSTANCE.getPermissionName();
     }
 }

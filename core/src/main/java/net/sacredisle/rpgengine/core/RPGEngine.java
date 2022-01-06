@@ -95,8 +95,7 @@ public class RPGEngine implements Engine {
         MojangAuth.init();
         MinecraftServer.getConnectionManager().setPlayerProvider(playerProvider);
         getEventHandler().addListener(PlayerLoginEvent.class, event -> {
-            if (event.getPlayer() instanceof RPGHuman) {
-                RPGHuman human = (RPGHuman) event.getPlayer();
+            if (event.getPlayer() instanceof RPGHuman human) {
                 event.setSpawningInstance(human.getSpawnInstance());
                 return;
             }

@@ -2,11 +2,8 @@ package net.sacredisle.rpgengine.core.command;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
-import net.minestom.server.command.builder.condition.Conditions;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.ai.EntityAIGroupBuilder;
 import net.minestom.server.entity.ai.goal.RandomLookAroundGoal;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
@@ -16,6 +13,7 @@ import net.sacredisle.rpgengine.core.human.HumanProfile;
 import net.sacredisle.rpgengine.core.human.RPGHuman;
 import net.sacredisle.rpgengine.core.human.RPGHumanCreature;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
+import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 import net.sacredisle.rpgengine.core.player.RPGPlayer;
 import net.sacredisle.rpgengine.core.skin.SkinResolver;
 
@@ -25,7 +23,7 @@ import java.util.UUID;
 /**
  * Created by Giovanni on 1/5/2022
  */
-public class EntityCommand extends Command {
+public class EntityCommand extends RPGCommand {
 
     public EntityCommand() {
         super("entity", "entities");
@@ -38,12 +36,17 @@ public class EntityCommand extends Command {
         });
     }
 
-    static class SubCreateEntity extends Command {
+    @Override
+    public String getPermission() {
+        return CommandPermissions.EXEC_ENTITY_COMMAND.getPermissionName();
+    }
+
+    static class SubCreateEntity extends RPGCommand {
 
         public SubCreateEntity() {
             super("create");
 
-            setCondition(Conditions::playerOnly);
+            setPlayerOnly(true);
             setDefaultExecutor((sender, context) -> {
                 sender.sendMessage("");
                 sender.sendMessage(Component.text("Incorrect syntax, use: /entity create <entityType> [level] [name]").color(NamedTextColor.RED));
@@ -64,13 +67,18 @@ public class EntityCommand extends Command {
 
             }), ArgumentType.EntityType("entityType"), ArgumentType.Integer("level").setDefaultValue(1), ArgumentType.String("name").setDefaultValue("RPGEntity"));
         }
+
+        @Override
+        public String getPermission() {
+            return CommandPermissions.EXEC_ENTITY_COMMAND.getPermissionName();
+        }
     }
 
-    static class SubCreateHuman extends Command {
+    static class SubCreateHuman extends RPGCommand {
         public SubCreateHuman() {
             super("human");
 
-            setCondition(Conditions::playerOnly);
+            setPlayerOnly(true);
             setDefaultExecutor((sender, context) -> {
                 sender.sendMessage("");
                 sender.sendMessage(Component.text("Incorrect syntax, use: /entity human <name> <userSkin> [level]").color(NamedTextColor.RED));
@@ -102,6 +110,11 @@ public class EntityCommand extends Command {
                     ((RPGHumanCreature) human).setRPGLevel(level);
                 }
             }), ArgumentType.String("name"), ArgumentType.String("userSkin"), ArgumentType.Integer("level").setDefaultValue(-1));
+        }
+
+        @Override
+        public String getPermission() {
+            return CommandPermissions.EXEC_ENTITY_COMMAND.getPermissionName();
         }
     }
 }
