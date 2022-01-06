@@ -4,8 +4,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.minestom.server.entity.Player;
 import net.minestom.server.network.player.PlayerConnection;
+import net.minestom.server.permission.Permission;
 import net.sacredisle.rpgengine.api.name.Username;
 import net.sacredisle.rpgengine.api.player.IRPGPlayer;
+import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -28,6 +30,12 @@ public class RPGPlayer extends Player implements IRPGPlayer {
      */
     public void addExperience(int amount) {
         this.exp += amount;
+    }
+
+    @Override
+    public boolean hasPermission(@NotNull Permission permission) {
+        if (super.hasPermission(CommandPermissions.ALL)) return true;
+        else return super.hasPermission(permission);
     }
 
     @Override

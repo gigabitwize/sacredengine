@@ -9,6 +9,8 @@ import net.minestom.server.permission.Permission;
  */
 public final class CommandPermissions {
 
+    public static final Permission ALL = new Permission("permission:all");
+
     /**
      * {@link net.sacredisle.rpgengine.core.command.EntityCommand}.
      */

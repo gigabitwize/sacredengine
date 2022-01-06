@@ -11,7 +11,7 @@ public interface ICommand {
     /**
      * Returns the {@link Permission} required to execute this command.
      */
-    String getPermission();
+    Permission getPermission();
 
     default boolean hasPermission(IRPGPlayer player) {
         return player.hasPermission(getPermission());

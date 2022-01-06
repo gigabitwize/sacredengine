@@ -1,8 +1,10 @@
 package net.sacredisle.rpgengine.core.command;
 
+import net.kyori.adventure.text.Component;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.condition.CommandCondition;
+import net.minestom.server.entity.Player;
 import net.sacredisle.rpgengine.api.ICommand;
 import net.sacredisle.rpgengine.api.player.IRPGPlayer;
 import org.jetbrains.annotations.NotNull;

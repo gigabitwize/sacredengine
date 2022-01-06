@@ -7,6 +7,7 @@ import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.condition.Conditions;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.permission.Permission;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 import net.sacredisle.rpgengine.core.player.RPGPlayer;
@@ -19,7 +20,7 @@ public class SwitchInstanceCommand extends RPGCommand {
     public SwitchInstanceCommand() {
         super("switch", "si");
 
-        setCondition(Conditions::playerOnly);
+        setPlayerOnly(true);
 
         setDefaultExecutor((sender, context) -> {
             sender.sendMessage("");
@@ -45,7 +46,7 @@ public class SwitchInstanceCommand extends RPGCommand {
     }
 
     @Override
-    public String getPermission() {
-        return CommandPermissions.EXEC_SWITCH_INSTANCE.getPermissionName();
+    public Permission getPermission() {
+        return CommandPermissions.EXEC_SWITCH_INSTANCE;
     }
 }

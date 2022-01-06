@@ -8,6 +8,7 @@ import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.permission.Permission;
 import net.sacredisle.rpgengine.api.Classes;
 import net.sacredisle.rpgengine.api.instance.generator.FlatGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.Generator;
@@ -67,7 +68,7 @@ public class GenerateInstanceCommand extends RPGCommand {
     }
 
     @Override
-    public String getPermission() {
-        return CommandPermissions.EXEC_MANAGE_INSTANCES.getPermissionName();
+    public Permission getPermission() {
+        return CommandPermissions.EXEC_MANAGE_INSTANCES;
     }
 }

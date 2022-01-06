@@ -7,6 +7,7 @@ import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.ai.EntityAIGroupBuilder;
 import net.minestom.server.entity.ai.goal.RandomLookAroundGoal;
 import net.minestom.server.entity.ai.goal.RandomStrollGoal;
+import net.minestom.server.permission.Permission;
 import net.sacredisle.rpgengine.api.Query;
 import net.sacredisle.rpgengine.core.entity.RPGCreature;
 import net.sacredisle.rpgengine.core.human.HumanProfile;
@@ -37,8 +38,8 @@ public class EntityCommand extends RPGCommand {
     }
 
     @Override
-    public String getPermission() {
-        return CommandPermissions.EXEC_ENTITY_COMMAND.getPermissionName();
+    public Permission getPermission() {
+        return CommandPermissions.EXEC_ENTITY_COMMAND;
     }
 
     static class SubCreateEntity extends RPGCommand {
@@ -69,8 +70,8 @@ public class EntityCommand extends RPGCommand {
         }
 
         @Override
-        public String getPermission() {
-            return CommandPermissions.EXEC_ENTITY_COMMAND.getPermissionName();
+        public Permission getPermission() {
+            return CommandPermissions.EXEC_ENTITY_COMMAND;
         }
     }
 
@@ -113,8 +114,8 @@ public class EntityCommand extends RPGCommand {
         }
 
         @Override
-        public String getPermission() {
-            return CommandPermissions.EXEC_ENTITY_COMMAND.getPermissionName();
+        public Permission getPermission() {
+            return CommandPermissions.EXEC_ENTITY_COMMAND;
         }
     }
 }

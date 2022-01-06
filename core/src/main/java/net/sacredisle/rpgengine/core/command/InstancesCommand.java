@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.permission.Permission;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 
@@ -35,7 +36,7 @@ public class InstancesCommand extends RPGCommand {
     }
 
     @Override
-    public String getPermission() {
-        return CommandPermissions.EXEC_LIST_INSTANCES.getPermissionName();
+    public Permission getPermission() {
+        return CommandPermissions.EXEC_LIST_INSTANCES;
     }
 }

@@ -33,7 +33,7 @@ public class TestBootstrap {
             OpenConnection.LOG.error("Connection failed, reason: " + status.getFirst().name());
             return;
         }
-        OpenConnection.LOG.info("Connection opened! State: LOCAL");
+        OpenConnection.LOG.info("Connection opened! Environment: LOCAL");
 
         try {
             RPGEngine rpgEngine = new RPGEngine(

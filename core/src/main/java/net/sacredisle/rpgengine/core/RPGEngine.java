@@ -26,6 +26,7 @@ import net.sacredisle.rpgengine.core.connection.OpenConnection;
 import net.sacredisle.rpgengine.core.entity.EntityChecker;
 import net.sacredisle.rpgengine.core.human.RPGHuman;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
+import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 import net.sacredisle.rpgengine.core.ping.DefaultPingHandler;
 import net.sacredisle.rpgengine.core.tag.Tags;
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +60,7 @@ public class RPGEngine implements Engine {
         if (Engine.get() != null)
             throw new AlreadyRunningException("Failed to create RPGEngine, the engine is already running.");
 
-        if(!OpenConnection.isOpen(forgedConnection))
+        if (!OpenConnection.isOpen(forgedConnection))
             throw new ConnectionNotReadyException();
 
         LOG.info("Starting the Sacred Engine..");
@@ -100,6 +101,8 @@ public class RPGEngine implements Engine {
                 return;
             }
             event.setSpawningInstance(mainInstance);
+            if (connection.__debugMode())
+                event.getPlayer().addPermission(CommandPermissions.ALL);
         });
 
         // TODO idk if event.isFirstSpawn only is true when the player joins for the first time ever
@@ -109,7 +112,6 @@ public class RPGEngine implements Engine {
                 if (event.getPlayer().hasTag(Tags.IGNORE_SPAWN_EVENTS)) return;
                 event.getPlayer().teleport(mainInstance.getSpawn());
             }
-
             if (connection.__debugMode())
                 event.getPlayer().setGameMode(GameMode.CREATIVE);
         });

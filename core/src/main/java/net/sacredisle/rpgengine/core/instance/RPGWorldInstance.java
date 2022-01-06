@@ -16,6 +16,7 @@ import java.util.UUID;
 /**
  * Created by Giovanni on 1/4/2022
  */
+@SuppressWarnings("UnstableApiUsage")
 public class RPGWorldInstance extends InstanceContainer implements IRPGInstance {
 
     private Pos spawn;
