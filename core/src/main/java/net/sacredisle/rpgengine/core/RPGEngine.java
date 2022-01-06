@@ -13,18 +13,21 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.PlayerProvider;
 import net.minestom.server.world.DimensionType;
 import net.sacredisle.rpgengine.api.Engine;
-import net.sacredisle.rpgengine.api.Ports;
 import net.sacredisle.rpgengine.api.exception.AlreadyRunningException;
 import net.sacredisle.rpgengine.api.instance.IRPGInstance;
 import net.sacredisle.rpgengine.api.instance.generator.FlatGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.Generator;
 import net.sacredisle.rpgengine.api.instance.generator.OceanGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.VoidGenerator;
+import net.sacredisle.rpgengine.api.server.Address;
+import net.sacredisle.rpgengine.api.server.Server;
+import net.sacredisle.rpgengine.core.connection.OpenConnection;
 import net.sacredisle.rpgengine.core.entity.EntityChecker;
 import net.sacredisle.rpgengine.core.human.RPGHuman;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import net.sacredisle.rpgengine.core.ping.DefaultPingHandler;
 import net.sacredisle.rpgengine.core.tag.Tags;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,36 +43,31 @@ public class RPGEngine implements Engine {
     public static final Logger LOG = LoggerFactory.getLogger(RPGEngine.class);
     public static final DimensionType DEFAULT_DIMENSION = DimensionType
             .builder(Engine.createNamespaceId("default_dimension"))
-            .ambientLight(0.75F) // Default is 0.5, make it slightly higher
+            .ambientLight(0.6F) // Default is 0.5, make it slightly higher
             .piglinSafe(true)
             .raidCapable(false)
             .build();
 
-    private final String ip;
-    private final int port;
+    private Server.Connection connection;
     private final MinecraftServer minecraftServer;
     private final Generator defaultGenerator;
     private final RPGWorldInstance mainInstance;
     private final DefaultPingHandler pingHandler;
 
-    public RPGEngine(String[] args, PlayerProvider playerProvider) throws BindException, AlreadyRunningException {
+    public RPGEngine(@NotNull Server.Connection forgedConnection, String[] args, @NotNull PlayerProvider playerProvider) throws BindException, AlreadyRunningException {
         if (Engine.get() != null)
             throw new AlreadyRunningException("Failed to create RPGEngine, the engine is already running.");
         LOG.info("Starting the Sacred Engine..");
 
         Engine.set(this);
+        connection = forgedConnection;
         pingHandler = new DefaultPingHandler();
 
-        ip = args[0];
-        port = Integer.parseInt(args[1]);
-        if (!Ports.isAvailable(port))
-            throw new BindException("Port " + port + " is already in use by another service.");
-
-        if (args[2].equalsIgnoreCase("ocean"))
+        if (args[0].equalsIgnoreCase("ocean"))
             defaultGenerator = new OceanGenerator();
-        else if (args[2].equalsIgnoreCase("void"))
+        else if (args[0].equalsIgnoreCase("void"))
             defaultGenerator = new VoidGenerator();
-        else if (args[2].equalsIgnoreCase("flat"))
+        else if (args[0].equalsIgnoreCase("flat"))
             defaultGenerator = new FlatGenerator(Block.STONE);
         else defaultGenerator = new OceanGenerator();
 
@@ -92,7 +90,7 @@ public class RPGEngine implements Engine {
         MojangAuth.init();
         MinecraftServer.getConnectionManager().setPlayerProvider(playerProvider);
         getEventHandler().addListener(PlayerLoginEvent.class, event -> {
-            if(event.getPlayer() instanceof RPGHuman) {
+            if (event.getPlayer() instanceof RPGHuman) {
                 RPGHuman human = (RPGHuman) event.getPlayer();
                 event.setSpawningInstance(human.getSpawnInstance());
                 return;
@@ -108,20 +106,27 @@ public class RPGEngine implements Engine {
                 event.getPlayer().teleport(mainInstance.getSpawn());
             }
 
-            if (args[3].equalsIgnoreCase("debug"))
+            if (connection.__debugMode())
                 event.getPlayer().setGameMode(GameMode.CREATIVE);
         });
 
         /* Start */
-        minecraftServer.start(ip, port);
+        startMinecraftServer();
         LOG.info("Sacred Engine is running.");
     }
 
     public StopResult stop() {
         LOG.info("Stopping the Sacred Engine..");
+        if (OpenConnection.isOpen(connection))
+            connection = ((OpenConnection) connection).close();
         Engine.set(null);
         MinecraftServer.stopCleanly();
         return StopResult.SUCCESS;
+    }
+
+    private void startMinecraftServer() {
+        Address address = connection.getServer().address();
+        minecraftServer.start(address.ip(), address.port());
     }
 
     @Override
@@ -160,13 +165,8 @@ public class RPGEngine implements Engine {
     }
 
     @Override
-    public int getRunningPort() {
-        return port;
-    }
-
-    @Override
-    public String getRunningIP() {
-        return ip;
+    public Server.Connection getConnection() {
+        return connection;
     }
 
     public enum StopResult {

@@ -12,7 +12,7 @@ import java.util.UUID;
  * Created by Giovanni on 1/4/2022
  * <p>
  * The default {@link PlayerProvider} for the {@link net.sacredisle.rpgengine.core.RPGEngine}. This provider
- * makes it so that every {@link Player} object can be casted to a {@link RPGPlayer} object and vice versa.
+ * makes it so that every {@link Player} object can be cast to a {@link RPGPlayer} object and vice versa.
  */
 public class RPGPlayerProvider implements PlayerProvider {
 

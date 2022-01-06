@@ -9,6 +9,7 @@ import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.DimensionType;
 import net.sacredisle.rpgengine.api.instance.IRPGInstance;
 import net.sacredisle.rpgengine.api.ping.PingHandler;
+import net.sacredisle.rpgengine.api.server.Server;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -55,14 +56,9 @@ public interface Engine {
     PingHandler getPingHandler();
 
     /**
-     * Returns the port the {@link #getMinecraftServer()} is running on.
+     * Returns this server's {@link net.sacredisle.rpgengine.api.server.Server.Connection}.
      */
-    int getRunningPort();
-
-    /**
-     * Returns the IP the {@link #getMinecraftServer()} is running on.
-     */
-    String getRunningIP();
+    Server.Connection getConnection();
 
     /**
      * Registers a {@link Command}.
