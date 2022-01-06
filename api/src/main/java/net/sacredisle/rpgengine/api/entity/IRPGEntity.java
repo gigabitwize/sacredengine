@@ -4,7 +4,8 @@ import net.sacredisle.rpgengine.api.name.Named;
 
 /**
  * Created by Giovanni on 1/4/2022
- *
+ * <p>
  * Barebones entity interface.
  */
-public interface IRPGEntity extends Named { }
+public interface IRPGEntity extends Named {
+}

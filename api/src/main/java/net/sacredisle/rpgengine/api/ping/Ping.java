@@ -14,6 +14,12 @@ public interface Ping {
      */
     int requestCode();
 
+    public enum Result {
+
+        SUCCESS,
+        FAILED;
+    }
+
     public interface Response {
 
         /**
@@ -30,11 +36,5 @@ public interface Ping {
          * The request code that resulted in this response.
          */
         int requestCode();
-    }
-
-    public enum Result {
-
-        SUCCESS,
-        FAILED;
     }
 }

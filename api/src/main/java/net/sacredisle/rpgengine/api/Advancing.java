@@ -8,6 +8,15 @@ package net.sacredisle.rpgengine.api;
 public interface Advancing {
 
     /**
+     * Returns the required amount of EXP to reach a certain level.
+     *
+     * @param level The level to calculate for.
+     */
+    static int calculatingRequiredExp(int level) {
+        return 0; // TODO
+    }
+
+    /**
      * Returns the current EXP this advancing object has.
      */
     int getRPGExp();
@@ -26,13 +35,4 @@ public interface Advancing {
      * Sets the current experience.
      */
     void setRPGExperience(int experience);
-
-    /**
-     * Returns the required amount of EXP to reach a certain level.
-     *
-     * @param level The level to calculate for.
-     */
-    static int calculatingRequiredExp(int level) {
-        return 0; // TODO
-    }
 }

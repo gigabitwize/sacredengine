@@ -1,8 +1,6 @@
 package net.sacredisle.rpgengine.core.entity;
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.LivingEntity;
 import net.sacredisle.rpgengine.api.entity.IRPGEntity;
@@ -12,15 +10,15 @@ import java.util.UUID;
 
 /**
  * Created by Giovanni on 1/4/2022
- *
+ * <p>
  * A base entity object that requires no AI and navigation. For example
  * static NPCs or other kinds of entities that don't require any actual
  * behaviour.
  */
 public class RPGEntity extends LivingEntity implements IRPGEntity {
 
-    private TextComponent customName;
     private final String entityName;
+    private TextComponent customName;
 
     public RPGEntity(@NotNull EntityType entityType, String entityName, TextComponent customName) {
         super(entityType, UUID.randomUUID());

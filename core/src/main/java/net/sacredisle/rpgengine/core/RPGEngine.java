@@ -22,6 +22,8 @@ import net.sacredisle.rpgengine.api.instance.generator.OceanGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.VoidGenerator;
 import net.sacredisle.rpgengine.api.server.Address;
 import net.sacredisle.rpgengine.api.server.Server;
+import net.sacredisle.rpgengine.api.vanilla.VanillaProvider;
+import net.sacredisle.rpgengine.api.vanilla.VanillaUtil;
 import net.sacredisle.rpgengine.core.connection.OpenConnection;
 import net.sacredisle.rpgengine.core.entity.EntityChecker;
 import net.sacredisle.rpgengine.core.human.RPGHuman;
@@ -29,6 +31,8 @@ import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 import net.sacredisle.rpgengine.core.ping.DefaultPingHandler;
 import net.sacredisle.rpgengine.core.tag.Tags;
+import net.sacredisle.rpgengine.core.vanilla.stairs.StairsFunction;
+import net.sacredisle.rpgengine.core.vanilla.wall.WallFunction;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +45,6 @@ import java.util.UUID;
  */
 public class RPGEngine implements Engine {
 
-    public static int MAX_PLAYERS = 100;
     public static final Logger LOG = LoggerFactory.getLogger(RPGEngine.class);
     public static final DimensionType DEFAULT_DIMENSION = DimensionType
             .builder(Engine.createNamespaceId("default_dimension"))
@@ -49,12 +52,12 @@ public class RPGEngine implements Engine {
             .piglinSafe(true)
             .raidCapable(false)
             .build();
-
-    private Server.Connection connection;
+    public static int MAX_PLAYERS = 100;
     private final MinecraftServer minecraftServer;
     private final Generator defaultGenerator;
     private final RPGWorldInstance mainInstance;
     private final DefaultPingHandler pingHandler;
+    private Server.Connection connection;
 
     public RPGEngine(@NotNull Server.Connection forgedConnection, String[] args, @NotNull PlayerProvider playerProvider) throws BindException, AlreadyRunningException, ConnectionNotReadyException {
         if (Engine.get() != null)
@@ -69,6 +72,13 @@ public class RPGEngine implements Engine {
         connection = forgedConnection;
         pingHandler = new DefaultPingHandler();
 
+        /* Check args here */
+        boolean noVanilla = false;
+        for(String arg : args) {
+            if(arg.equalsIgnoreCase("no-vanilla"))
+                noVanilla = true;
+        }
+
         if (args[0].equalsIgnoreCase("ocean"))
             defaultGenerator = new OceanGenerator();
         else if (args[0].equalsIgnoreCase("void"))
@@ -79,6 +89,13 @@ public class RPGEngine implements Engine {
 
         minecraftServer = MinecraftServer.init();
         getEventHandler().addListener(pingHandler);
+
+        /* Vanilla functionality */
+        if(!noVanilla) {
+            VanillaProvider.setEnabled(true);
+            registerVanillaFeatures();
+            LOG.info("Using VanillaProvider");
+        } else VanillaProvider.setEnabled(false);
 
         /* Main Instance generation */
         MinecraftServer.getDimensionTypeManager().addDimension(DEFAULT_DIMENSION);
@@ -133,6 +150,12 @@ public class RPGEngine implements Engine {
     private void startMinecraftServer() {
         Address address = connection.getServer().address();
         minecraftServer.start(address.ip(), address.port());
+    }
+
+    private void registerVanillaFeatures() {
+        getEventHandler().addChild(VanillaProvider.VANILLA_NODE);
+        VanillaProvider.registerFunction(new StairsFunction());
+        VanillaProvider.registerFunction(new WallFunction());
     }
 
     @Override

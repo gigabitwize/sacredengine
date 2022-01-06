@@ -24,6 +24,10 @@ public class OpenConnection implements Server.Connection {
         this.DEBUG = DEBUG;
     }
 
+    public static boolean isOpen(Server.Connection connection) {
+        return connection instanceof OpenConnection;
+    }
+
     /**
      * Closes this connection and returns a base, closed {@link net.sacredisle.rpgengine.api.server.Server.Connection}.
      * <p>
@@ -62,9 +66,5 @@ public class OpenConnection implements Server.Connection {
     @Override
     public boolean __debugMode() {
         return DEBUG;
-    }
-
-    public static boolean isOpen(Server.Connection connection) {
-        return connection instanceof OpenConnection;
     }
 }

@@ -1,6 +1,5 @@
 package net.sacredisle.rpgengine.api.instance.generator;
 
-import net.minestom.server.instance.ChunkGenerator;
 import net.minestom.server.instance.ChunkPopulator;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;

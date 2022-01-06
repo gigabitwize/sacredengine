@@ -4,7 +4,7 @@ import net.kyori.adventure.text.TextComponent;
 
 /**
  * Created by Giovanni on 1/4/2022
- *
+ * <p>
  * A named object.
  */
 public interface Named {

@@ -1,6 +1,5 @@
 package net.sacredisle.rpgengine.api.player;
 
-import net.minestom.server.entity.Player;
 import net.minestom.server.permission.PermissionHandler;
 import net.sacredisle.rpgengine.api.Advancing;
 import net.sacredisle.rpgengine.api.name.Named;

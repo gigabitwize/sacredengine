@@ -44,11 +44,6 @@ public class RPGPlayer extends Player implements IRPGPlayer {
     }
 
     @Override
-    public void setRPGLevel(int level) {
-        this.level = level;
-    }
-
-    @Override
     public void setRPGExperience(int experience) {
         this.exp = experience;
     }
@@ -76,5 +71,10 @@ public class RPGPlayer extends Player implements IRPGPlayer {
     @Override
     public int getRPGLevel() {
         return level;
+    }
+
+    @Override
+    public void setRPGLevel(int level) {
+        this.level = level;
     }
 }

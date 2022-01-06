@@ -8,4 +8,5 @@ import net.sacredisle.rpgengine.api.Advancing;
  * Barebones creature interface. Has support for navigation and AI, unlike
  * {@link IRPGEntity}.
  */
-public interface IRPGCreature extends IRPGEntity, Advancing { }
+public interface IRPGCreature extends IRPGEntity, Advancing {
+}

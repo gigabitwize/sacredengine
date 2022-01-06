@@ -39,7 +39,7 @@ public class GenerateInstanceCommand extends RPGCommand {
             GeneratorType generatorType = context.get(typeArg);
             Generator generator = null;
 
-            if(generatorType == GeneratorType.FLAT)
+            if (generatorType == GeneratorType.FLAT)
                 generator = new FlatGenerator(Block.GRASS_BLOCK);
             else generator = (Generator) Classes.newInstance(generatorType.getGenerator());
 
@@ -62,8 +62,8 @@ public class GenerateInstanceCommand extends RPGCommand {
             sender.sendMessage(
                     Component
                             .text("Done! New instance").color(NamedTextColor.GREEN).append(Component
-                            .text("(" + instanceName + ")").color(NamedTextColor.DARK_AQUA).append(Component
-                                    .text(" has been created").color(NamedTextColor.GREEN))));
+                                    .text("(" + instanceName + ")").color(NamedTextColor.DARK_AQUA).append(Component
+                                            .text(" has been created").color(NamedTextColor.GREEN))));
         }, argumentString, typeArg);
     }
 

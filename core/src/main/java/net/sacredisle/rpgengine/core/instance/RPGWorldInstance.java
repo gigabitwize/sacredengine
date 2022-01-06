@@ -19,9 +19,9 @@ import java.util.UUID;
 @SuppressWarnings("UnstableApiUsage")
 public class RPGWorldInstance extends InstanceContainer implements IRPGInstance {
 
+    private final String name;
     private Pos spawn;
     private TextComponent displayName;
-    private final String name;
 
     public RPGWorldInstance(@NotNull UUID uniqueId,
                             @NotNull DimensionType dimensionType,

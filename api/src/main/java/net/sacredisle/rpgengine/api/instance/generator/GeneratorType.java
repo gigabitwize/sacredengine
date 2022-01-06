@@ -13,7 +13,7 @@ public enum GeneratorType {
 
     private final Class<? extends ChunkGenerator> clazz;
 
-    GeneratorType(Class<? extends ChunkGenerator>  clazz) {
+    GeneratorType(Class<? extends ChunkGenerator> clazz) {
         this.clazz = clazz;
     }
 

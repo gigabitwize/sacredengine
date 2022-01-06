@@ -12,15 +12,15 @@ import java.util.UUID;
 
 /**
  * Created by Giovanni on 1/4/2022
- *
+ * <p>
  * An entity object that has support for navigation and AI. Can be
  * ANY entity type.
  */
 public class RPGCreature extends EntityCreature implements IRPGCreature {
 
+    private final String entityName;
     private int level = 1;
     private TextComponent customName;
-    private final String entityName;
 
     public RPGCreature(@NotNull EntityType entityType, int level, String entityName, TextComponent customName) {
         super(entityType, UUID.randomUUID());
@@ -44,11 +44,6 @@ public class RPGCreature extends EntityCreature implements IRPGCreature {
     }
 
     @Override
-    public void setRPGLevel(int level) {
-        this.level = level;
-    }
-
-    @Override
     @Deprecated
     public void setRPGExperience(int experience) {
 
@@ -62,6 +57,11 @@ public class RPGCreature extends EntityCreature implements IRPGCreature {
     @Override
     public int getRPGLevel() {
         return level;
+    }
+
+    @Override
+    public void setRPGLevel(int level) {
+        this.level = level;
     }
 
     @Override

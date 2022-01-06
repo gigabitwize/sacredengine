@@ -1,8 +1,6 @@
 package net.sacredisle.rpgengine.core.human;
 
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.coordinate.Pos;
 import net.sacredisle.rpgengine.api.Advancing;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
@@ -24,11 +22,6 @@ public class RPGHumanCreature extends RPGHuman implements Advancing {
     }
 
     @Override
-    public void setRPGLevel(int level) {
-        this.level = level;
-    }
-
-    @Override
     @Deprecated
     public void setRPGExperience(int experience) {
     }
@@ -41,5 +34,10 @@ public class RPGHumanCreature extends RPGHuman implements Advancing {
     @Override
     public int getRPGLevel() {
         return level;
+    }
+
+    @Override
+    public void setRPGLevel(int level) {
+        this.level = level;
     }
 }

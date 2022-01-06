@@ -22,6 +22,28 @@ public interface Engine {
     AtomicReference<String> BUILD_VERSION = new AtomicReference<>("0.0.1");
 
     /**
+     * Creates a new {@link NamespaceID}.
+     */
+    static NamespaceID createNamespaceId(String key) {
+        return NamespaceID.from("rpgengine", key);
+    }
+
+    static void set(Engine engine) {
+        REFERENCE.set(engine);
+    }
+
+    static Engine get() {
+        return REFERENCE.get();
+    }
+
+    /**
+     * Returns the current version of the engine.
+     */
+    static String getBuildVersion() {
+        return BUILD_VERSION.get();
+    }
+
+    /**
      * Returns the {@link MinecraftServer}.
      */
     MinecraftServer getMinecraftServer();
@@ -64,26 +86,4 @@ public interface Engine {
      * Registers a {@link Command}.
      */
     void registerCommand(Command command);
-
-    /**
-     * Creates a new {@link NamespaceID}.
-     */
-    static NamespaceID createNamespaceId(String key) {
-        return NamespaceID.from("rpgengine", key);
-    }
-
-    static void set(Engine engine) {
-        REFERENCE.set(engine);
-    }
-
-    static Engine get() {
-        return REFERENCE.get();
-    }
-
-    /**
-     * Returns the current version of the engine.
-     */
-    static String getBuildVersion() {
-        return BUILD_VERSION.get();
-    }
 }

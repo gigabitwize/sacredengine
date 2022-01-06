@@ -5,7 +5,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
-import net.minestom.server.command.builder.condition.Conditions;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.permission.Permission;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;

@@ -25,6 +25,12 @@ public class SkinResolver implements Resolver<Query<UUID, String>, PlayerSkin> {
         SKIN_CACHE = new ConcurrentHashMap<>();
     }
 
+    public static SkinResolver get() {
+        if (resolver == null)
+            resolver = new SkinResolver();
+        return resolver;
+    }
+
     @Override
     public Iterator<PlayerSkin> iterate() {
         return SKIN_CACHE.values().iterator();
@@ -53,11 +59,5 @@ public class SkinResolver implements Resolver<Query<UUID, String>, PlayerSkin> {
         }
         // Query is empty
         return null;
-    }
-
-    public static SkinResolver get() {
-        if (resolver == null)
-            resolver = new SkinResolver();
-        return resolver;
     }
 }
