@@ -1,5 +1,9 @@
 package net.sacredisle.engine.api.model;
 
+import net.sacredisle.engine.api.Engine;
+import org.jetbrains.annotations.Nullable;
+
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -15,8 +19,25 @@ import java.util.List;
  */
 public interface ModelEngine {
 
+    Path DEFAULT_PATH = Path.of(System.getProperty("user.dir") + "/engine" + Engine.BUILD_VERSION + "/sacred3d/models/");
+
     /**
      * Returns a list of registered {@link Model}s.
      */
-    List<Model> getModels();
+    List<Model<?>> getModels();
+
+    /**
+     * Returns a {@link Model} by type and name.
+     */
+    @Nullable Model<?> getModel(Model.Type type, String name);
+
+    /**
+     * Returns whether 3D model functionality & processing should be enabled or not.
+     */
+    boolean isEnabled();
+
+    /**
+     * Sets whether 3D model functionality & processing should be enabled or not.
+     */
+    void setEnabled(boolean b);
 }

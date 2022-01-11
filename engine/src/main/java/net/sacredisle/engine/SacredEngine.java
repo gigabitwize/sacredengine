@@ -7,11 +7,11 @@ import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.block.Block;
 import net.sacredisle.engine.api.Engine;
 import net.sacredisle.engine.api.instance.RPGInstance;
-import net.sacredisle.engine.api.lighting.LightEngine;
 import net.sacredisle.engine.api.model.ModelEngine;
 import net.sacredisle.engine.instance.RPGInstanceImpl;
 import net.sacredisle.engine.instance.generator.FlatGenerator;
 import net.sacredisle.engine.lighting.SacredLighting;
+import net.sacredisle.engine.model.Sacred3D;
 import net.sacredisle.engine.player.RPGPlayerProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +24,8 @@ public class SacredEngine implements Engine {
     public static final Logger LOG = LoggerFactory.getLogger(SacredEngine.class);
     private final MinecraftServer minecraftServer;
     private final SacredLighting lightEngine;
+    private final Sacred3D modelEngine;
+
     private final RPGInstanceImpl defaultInstance;
 
     public SacredEngine() {
@@ -50,13 +52,18 @@ public class SacredEngine implements Engine {
         lightEngine = new SacredLighting();
         lightEngine.setEnabled(true);
 
+        modelEngine = new Sacred3D(ModelEngine.DEFAULT_PATH);
+        modelEngine.setEnabled(true);
+
         minecraftServer.start("localhost", 25565);
         LOG.info("SacredEngine bootstrap done, took " + (System.currentTimeMillis() - bootTime) + "ms.");
     }
 
-    @Override
-    public LightEngine getLightEngine() {
-        return lightEngine;
+    /******************
+     * TESTING TODO
+     */
+    public static void main(String[] args) {
+        SacredEngine sacredEngine = new SacredEngine();
     }
 
     @Override
@@ -70,14 +77,12 @@ public class SacredEngine implements Engine {
     }
 
     @Override
-    public ModelEngine getModelEngine() {
-        return null;
+    public SacredLighting getLightEngine() {
+        return lightEngine;
     }
 
-    /******************
-     * TESTING TODO
-     */
-    public static void main(String[] args) {
-        SacredEngine sacredEngine = new SacredEngine();
+    @Override
+    public Sacred3D getModelEngine() {
+        return modelEngine;
     }
 }

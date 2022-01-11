@@ -74,11 +74,6 @@ public class RPGInstanceImpl extends InstanceContainer implements RPGInstance {
     }
 
     @Override
-    public void setEnabled(boolean b) {
-        this.enabled = b;
-    }
-
-    @Override
     public String getId() {
         return id;
     }
@@ -96,6 +91,11 @@ public class RPGInstanceImpl extends InstanceContainer implements RPGInstance {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public void setEnabled(boolean b) {
+        this.enabled = b;
     }
 
     public boolean isBuildingEnabled() {

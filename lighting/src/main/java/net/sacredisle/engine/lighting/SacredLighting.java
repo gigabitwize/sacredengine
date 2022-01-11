@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.DynamicChunk;
 import net.minestom.server.instance.Instance;
-import net.sacredisle.engine.api.Actor;
 import net.sacredisle.engine.api.lighting.LightEngine;
 import net.sacredisle.engine.api.lighting.Volume;
 import net.sacredisle.engine.lighting.exception.EmptyVolumeException;
@@ -74,11 +73,7 @@ public final class SacredLighting implements LightEngine {
         return null;
     }
 
-    /**
-     * Gets a {@link Volume} by ID.
-     *
-     * @param actorId The {@link Actor#getId()} ID.
-     */
+    @Override
     public Volume getVolume(String actorId) {
         for (Volume volume : volumes)
             if (volume.getId().equalsIgnoreCase(actorId))
@@ -99,7 +94,6 @@ public final class SacredLighting implements LightEngine {
                 LOG.info("No Volumes are present at this time, no lighting is being built.");
                 return;
             }
-
             for (Volume volume : volumes)
                 volume.setEnabled(enabled);
         }

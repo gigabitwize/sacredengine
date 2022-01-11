@@ -1,5 +1,8 @@
 package net.sacredisle.engine.api.lighting;
 
+import net.sacredisle.engine.api.Actor;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Set;
 
 /**
@@ -28,6 +31,13 @@ public interface LightEngine {
      * Sets whether lighting functionality & processing should be enabled or not.
      */
     void setEnabled(boolean b);
+
+    /**
+     * Gets a {@link Volume} by ID.
+     *
+     * @param actorId The {@link Actor#getId()} ID.
+     */
+    @Nullable Volume getVolume(String actorId);
 
     default int getVolumeCount() {
         return getVolumes().size();
