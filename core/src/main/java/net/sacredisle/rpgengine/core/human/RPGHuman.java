@@ -19,13 +19,13 @@ public class RPGHuman extends FakePlayer implements IRPGEntity {
 
     private final HumanProfile profile;
     private final WeakReference<RPGWorldInstance> spawnInstance;
+    private final Pos spawnPosition;
 
     public RPGHuman(@NotNull RPGWorldInstance instance, @NotNull Pos spawnPosition, @NotNull HumanProfile profile) {
-        super(UUID.randomUUID(), profile.userName(), new FakePlayerOption().setInTabList(false).setRegistered(false), fakePlayer -> {
-            fakePlayer.teleport(spawnPosition);
-        });
+        super(UUID.randomUUID(), profile.userName(), new FakePlayerOption().setInTabList(false).setRegistered(false), null);
         this.profile = profile;
         this.spawnInstance = new WeakReference<>(instance);
+        this.spawnPosition = spawnPosition;
         setSkin(profile.skin());
     }
 
@@ -41,6 +41,10 @@ public class RPGHuman extends FakePlayer implements IRPGEntity {
     @Override
     public TextComponent getLiveDisplayName() {
         return Component.text(profile.userName());
+    }
+
+    public Pos getSpawnPosition() {
+        return spawnPosition;
     }
 
     public RPGWorldInstance getSpawnInstance() {

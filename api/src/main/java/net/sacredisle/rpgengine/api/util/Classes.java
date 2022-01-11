@@ -1,4 +1,4 @@
-package net.sacredisle.rpgengine.api;
+package net.sacredisle.rpgengine.api.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

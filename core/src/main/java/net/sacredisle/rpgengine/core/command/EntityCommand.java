@@ -59,7 +59,7 @@ public class EntityCommand extends RPGCommand {
                 String name = context.get("name");
 
                 EntityType entityType = context.get("entityType");
-                RPGCreature rpgCreature = new RPGCreature(entityType, context.get("level"), name, Component.text(name));
+                RPGCreature rpgCreature = new RPGCreature(entityType, context.get("level"), name, Component.text(name).color(NamedTextColor.RED));
                 rpgCreature.addAIGroup(new EntityAIGroupBuilder()
                         .addGoalSelector(new RandomStrollGoal(rpgCreature, 10))
                         .addGoalSelector(new RandomLookAroundGoal(rpgCreature, 20))

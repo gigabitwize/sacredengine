@@ -1,4 +1,4 @@
-package net.sacredisle.rpgengine.api;
+package net.sacredisle.rpgengine.api.util;
 
 import java.io.IOException;
 import java.net.DatagramSocket;

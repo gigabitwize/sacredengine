@@ -16,7 +16,7 @@ public interface VanillaProvider {
 
     AtomicReference<Boolean> ENABLED = new AtomicReference<>(false);
     EventNode<Event> VANILLA_NODE = EventNode.all("vanilla-provider");
-    Collection<VanillaFunction<? extends Event> > FUNCTIONS = Lists.newArrayList();
+    Collection<VanillaFunction<? extends Event>> FUNCTIONS = Lists.newArrayList();
 
     /**
      * Registers a {@link VanillaFunction}.
@@ -30,7 +30,7 @@ public interface VanillaProvider {
      * Disables a {@link VanillaFunction}.
      */
     static void disable(Class<? extends VanillaFunction<? extends Event>> function) {
-        for(VanillaFunction<? extends Event> func : FUNCTIONS) {
+        for (VanillaFunction<? extends Event> func : FUNCTIONS) {
             if (func.getClass().getName().equalsIgnoreCase(function.getName())) {
                 func.setEnabled(false);
                 break;
@@ -41,7 +41,7 @@ public interface VanillaProvider {
     /**
      * Returns whether a {@link VanillaFunction} should run or not.
      */
-    static boolean shouldRun(VanillaFunction<? extends Event>  function) {
+    static boolean shouldRun(VanillaFunction<? extends Event> function) {
         return isEnabled() && function.isEnabled();
     }
 
@@ -50,7 +50,7 @@ public interface VanillaProvider {
      */
     static boolean shouldRun(Class<? extends VanillaFunction<? extends Event>> function) {
         boolean run = false;
-        for(VanillaFunction<? extends Event> func : FUNCTIONS) {
+        for (VanillaFunction<? extends Event> func : FUNCTIONS) {
             if (func.getClass().getName().equalsIgnoreCase(function.getName())) {
                 run = func.isEnabled();
                 break;
@@ -59,14 +59,14 @@ public interface VanillaProvider {
         return isEnabled() && run;
     }
 
+    static boolean isEnabled() {
+        return ENABLED.get();
+    }
+
     /**
      * Sets whether the vanilla features provided by this interface are enabled or not.
      */
     static void setEnabled(boolean b) {
         ENABLED.set(b);
-    }
-
-    static boolean isEnabled() {
-        return ENABLED.get();
     }
 }

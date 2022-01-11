@@ -38,7 +38,7 @@ public class TestBootstrap {
         try {
             RPGEngine rpgEngine = new RPGEngine(
                     connection,
-                    new String[]{"ocean"},
+                    new String[]{"ocean", "no-vanilla"},
                     new RPGPlayerProvider());
 
             rpgEngine.registerCommand(new GenerateInstanceCommand());

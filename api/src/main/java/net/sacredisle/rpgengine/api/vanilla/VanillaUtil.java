@@ -11,7 +11,7 @@ public class VanillaUtil {
      * Returns whether a {@link Block} is stairs or not.
      */
     public static boolean isStairs(Block block) {
-       return block.name().toLowerCase().contains("stairs");
+        return block.name().toLowerCase().contains("stairs");
     }
 
     /**

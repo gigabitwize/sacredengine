@@ -9,21 +9,21 @@ import net.sacredisle.rpgengine.api.vanilla.VanillaFunction;
  */
 public class VanillaFunctionImpl<E extends Event> implements VanillaFunction<E> {
 
-    private boolean enabled = true;
     private final EventListener<E> listener;
+    private boolean enabled = true;
 
     public VanillaFunctionImpl(EventListener<E> listener) {
         this.listener = listener;
     }
 
     @Override
-    public void setEnabled(boolean b) {
-        this.enabled = b;
+    public boolean isEnabled() {
+        return enabled;
     }
 
     @Override
-    public boolean isEnabled() {
-        return enabled;
+    public void setEnabled(boolean b) {
+        this.enabled = b;
     }
 
     @Override

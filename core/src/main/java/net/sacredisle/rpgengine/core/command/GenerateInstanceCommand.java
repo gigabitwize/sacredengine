@@ -9,7 +9,7 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.permission.Permission;
-import net.sacredisle.rpgengine.api.Classes;
+import net.sacredisle.rpgengine.api.util.Classes;
 import net.sacredisle.rpgengine.api.instance.generator.FlatGenerator;
 import net.sacredisle.rpgengine.api.instance.generator.Generator;
 import net.sacredisle.rpgengine.api.instance.generator.GeneratorType;
@@ -40,7 +40,7 @@ public class GenerateInstanceCommand extends RPGCommand {
             Generator generator = null;
 
             if (generatorType == GeneratorType.FLAT)
-                generator = new FlatGenerator(Block.GRASS_BLOCK);
+                generator = new FlatGenerator(Block.SANDSTONE);
             else generator = (Generator) Classes.newInstance(generatorType.getGenerator());
 
             if (generator == null) {
@@ -56,6 +56,7 @@ public class GenerateInstanceCommand extends RPGCommand {
                     new Pos(0, generator.getSpawnY(), 0),
                     instanceName, null);
             newInstance.setChunkGenerator(generator);
+            newInstance.setTime(13000);
             MinecraftServer.getInstanceManager().registerInstance(newInstance);
 
             sender.sendMessage("");

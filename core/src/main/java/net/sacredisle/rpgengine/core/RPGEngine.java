@@ -23,14 +23,12 @@ import net.sacredisle.rpgengine.api.instance.generator.VoidGenerator;
 import net.sacredisle.rpgengine.api.server.Address;
 import net.sacredisle.rpgengine.api.server.Server;
 import net.sacredisle.rpgengine.api.vanilla.VanillaProvider;
-import net.sacredisle.rpgengine.api.vanilla.VanillaUtil;
 import net.sacredisle.rpgengine.core.connection.OpenConnection;
 import net.sacredisle.rpgengine.core.entity.EntityChecker;
 import net.sacredisle.rpgengine.core.human.RPGHuman;
 import net.sacredisle.rpgengine.core.instance.RPGWorldInstance;
 import net.sacredisle.rpgengine.core.permission.CommandPermissions;
 import net.sacredisle.rpgengine.core.ping.DefaultPingHandler;
-import net.sacredisle.rpgengine.core.tag.Tags;
 import net.sacredisle.rpgengine.core.vanilla.stairs.StairsFunction;
 import net.sacredisle.rpgengine.core.vanilla.wall.WallFunction;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +46,7 @@ public class RPGEngine implements Engine {
     public static final Logger LOG = LoggerFactory.getLogger(RPGEngine.class);
     public static final DimensionType DEFAULT_DIMENSION = DimensionType
             .builder(Engine.createNamespaceId("default_dimension"))
-            .ambientLight(0.6F) // Default is 0.5, make it slightly higher
+            .skylightEnabled(true)
             .piglinSafe(true)
             .raidCapable(false)
             .build();
@@ -74,8 +72,8 @@ public class RPGEngine implements Engine {
 
         /* Check args here */
         boolean noVanilla = false;
-        for(String arg : args) {
-            if(arg.equalsIgnoreCase("no-vanilla"))
+        for (String arg : args) {
+            if (arg.equalsIgnoreCase("no-vanilla"))
                 noVanilla = true;
         }
 
@@ -91,7 +89,7 @@ public class RPGEngine implements Engine {
         getEventHandler().addListener(pingHandler);
 
         /* Vanilla functionality */
-        if(!noVanilla) {
+        if (!noVanilla) {
             VanillaProvider.setEnabled(true);
             registerVanillaFeatures();
             LOG.info("Using VanillaProvider");
@@ -114,6 +112,7 @@ public class RPGEngine implements Engine {
         MinecraftServer.getConnectionManager().setPlayerProvider(playerProvider);
         getEventHandler().addListener(PlayerLoginEvent.class, event -> {
             if (event.getPlayer() instanceof RPGHuman human) {
+                event.getPlayer().setRespawnPoint(human.getSpawnPosition());
                 event.setSpawningInstance(human.getSpawnInstance());
                 return;
             }
@@ -125,10 +124,14 @@ public class RPGEngine implements Engine {
         // TODO idk if event.isFirstSpawn only is true when the player joins for the first time ever
         // TODO if not, get the current spawning instance's spawn pos rather than the main instance's.
         getEventHandler().addListener(PlayerSpawnEvent.class, event -> {
-            if (event.isFirstSpawn()) {
-                if (event.getPlayer().hasTag(Tags.IGNORE_SPAWN_EVENTS)) return;
-                event.getPlayer().teleport(mainInstance.getSpawn());
+            if(event.getPlayer() instanceof RPGHuman human) {
+                human.teleport(human.getRespawnPoint());
+                return;
             }
+
+            if (event.isFirstSpawn())
+                event.getPlayer().teleport(mainInstance.getSpawn());
+
             if (connection.__debugMode())
                 event.getPlayer().setGameMode(GameMode.CREATIVE);
         });

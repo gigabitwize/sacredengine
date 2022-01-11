@@ -68,71 +68,6 @@ public class StairsFunction extends VanillaFunctionImpl<PlayerBlockPlaceEvent> {
 
         }
 
-        private enum Shape {
-            STRAIGHT,
-            OUTER_LEFT,
-            OUTER_RIGHT,
-            INNER_LEFT,
-            INNER_RIGHT
-        }
-
-        private enum Facing {
-            NORTH(
-                    new Vec(0, 0, 1),
-                    new Vec(0, 0, -1)
-            ),
-            EAST(
-                    new Vec(-1, 0, 0),
-                    new Vec(1, 0, 0)
-            ),
-            SOUTH(
-                    new Vec(0, 0, -1),
-                    new Vec(0, 0, 1)
-            ),
-            WEST(
-                    new Vec(1, 0, 0),
-                    new Vec(-1, 0, 0)
-            );
-
-            private final Point front;
-            private final Point back;
-
-            Facing(@NotNull Point front, @NotNull Point back) {
-                this.front = front;
-                this.back = back;
-            }
-
-            @NotNull
-            public Pair<@Nullable Shape, @Nullable Facing> getFront(@NotNull Instance instance, @NotNull Point blockPosition) {
-                // TODO FIX
-                return null;
-                //return this.getProperties(instance, blockPosition.clone().add(this.front));
-            }
-
-            @NotNull
-            public Pair<@Nullable Shape, @Nullable Facing> getBack(@NotNull Instance instance, @NotNull Point blockPosition) {
-                return this.getProperties(instance, blockPosition.add(this.back));
-            }
-
-            @NotNull
-            private Pair<@Nullable Shape, @Nullable Facing> getProperties(@NotNull Instance instance, @NotNull Point blockPosition) {
-                Block block = instance.getBlock(blockPosition);
-                if (block.isAir()) {
-                    return Pair.of(null, null);
-                }
-                Block state = instance.getBlock(blockPosition);
-                try {
-                    // TODO: Get properties from state
-//                Shape shape = Shape.valueOf(state.getProperty("shape").toUpperCase());
-//                Facing facing = Facing.valueOf(state.getProperty("facing").toUpperCase());
-//                return Pair.of(shape, facing);
-                    return Pair.of(null, null);
-                } catch (Exception ex) {
-                    return Pair.of(null, null);
-                }
-            }
-        }
-
         private Shape getShape(@NotNull Instance instance, @NotNull Point blockPosition, @NotNull Facing facing) {
             // TODO FIX
             return null;
@@ -195,6 +130,71 @@ public class StairsFunction extends VanillaFunctionImpl<PlayerBlockPlaceEvent> {
                 return Facing.SOUTH;
             } else { // 315 <= degrees && degrees < 360
                 return Facing.WEST;
+            }
+        }
+
+        private enum Shape {
+            STRAIGHT,
+            OUTER_LEFT,
+            OUTER_RIGHT,
+            INNER_LEFT,
+            INNER_RIGHT
+        }
+
+        private enum Facing {
+            NORTH(
+                    new Vec(0, 0, 1),
+                    new Vec(0, 0, -1)
+            ),
+            EAST(
+                    new Vec(-1, 0, 0),
+                    new Vec(1, 0, 0)
+            ),
+            SOUTH(
+                    new Vec(0, 0, -1),
+                    new Vec(0, 0, 1)
+            ),
+            WEST(
+                    new Vec(1, 0, 0),
+                    new Vec(-1, 0, 0)
+            );
+
+            private final Point front;
+            private final Point back;
+
+            Facing(@NotNull Point front, @NotNull Point back) {
+                this.front = front;
+                this.back = back;
+            }
+
+            @NotNull
+            public Pair<@Nullable Shape, @Nullable Facing> getFront(@NotNull Instance instance, @NotNull Point blockPosition) {
+                // TODO FIX
+                return null;
+                //return this.getProperties(instance, blockPosition.clone().add(this.front));
+            }
+
+            @NotNull
+            public Pair<@Nullable Shape, @Nullable Facing> getBack(@NotNull Instance instance, @NotNull Point blockPosition) {
+                return this.getProperties(instance, blockPosition.add(this.back));
+            }
+
+            @NotNull
+            private Pair<@Nullable Shape, @Nullable Facing> getProperties(@NotNull Instance instance, @NotNull Point blockPosition) {
+                Block block = instance.getBlock(blockPosition);
+                if (block.isAir()) {
+                    return Pair.of(null, null);
+                }
+                Block state = instance.getBlock(blockPosition);
+                try {
+                    // TODO: Get properties from state
+//                Shape shape = Shape.valueOf(state.getProperty("shape").toUpperCase());
+//                Facing facing = Facing.valueOf(state.getProperty("facing").toUpperCase());
+//                return Pair.of(shape, facing);
+                    return Pair.of(null, null);
+                } catch (Exception ex) {
+                    return Pair.of(null, null);
+                }
             }
         }
 
