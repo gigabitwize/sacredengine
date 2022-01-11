@@ -1,6 +1,7 @@
 package net.sacredisle.engine.api;
 
 import net.minestom.server.MinecraftServer;
+import net.sacredisle.engine.api.instance.RPGInstance;
 import net.sacredisle.engine.api.lighting.LightEngine;
 import net.sacredisle.engine.api.model.ModelEngine;
 
@@ -44,6 +45,11 @@ public interface Engine {
      * Returns the {@link LightEngine}.
      */
     LightEngine getLightEngine();
+
+    /**
+     * Returns the default {@link RPGInstance}.
+     */
+    RPGInstance getDefaultInstance();
 
     /**
      * Returns the build version of the engine.
