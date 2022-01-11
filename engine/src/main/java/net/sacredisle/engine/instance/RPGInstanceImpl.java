@@ -44,6 +44,7 @@ public class RPGInstanceImpl extends InstanceContainer implements RPGInstance {
         for (Instance instance : MinecraftServer.getInstanceManager().getInstances()) {
             if (instance instanceof RPGInstanceImpl rpgInstance) {
                 if (rpgInstance == this) continue;
+                if(!rpgInstance.isEnabled()) continue;
                 movePlayersTo(rpgInstance);
                 break;
             }
@@ -55,9 +56,11 @@ public class RPGInstanceImpl extends InstanceContainer implements RPGInstance {
     @Override
     public void movePlayersTo(@NotNull RPGInstance newInstance) {
         if (!(newInstance instanceof Instance))
-            throw new InvalidInstanceException(newInstance.getClass(), " is not a valid Minestom Instance");
+            throw new InvalidInstanceException(newInstance.getClass(), "is not a valid Minestom Instance");
         if (newInstance == this)
             throw new InvalidInstanceException(newInstance.getClass(), "it's the same as the current one");
+        if(!newInstance.isEnabled())
+            throw new InvalidInstanceException(newInstance.getClass(), "is not enabled");
         getPlayers().forEach(player -> player.setInstance((Instance) newInstance, player.getPosition()));
     }
 
