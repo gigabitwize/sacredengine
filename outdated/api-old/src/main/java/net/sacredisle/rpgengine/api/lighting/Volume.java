@@ -3,8 +3,6 @@ package net.sacredisle.rpgengine.api.lighting;
 import com.google.common.collect.ImmutableList;
 import net.sacredisle.rpgengine.api.instance.IRPGInstance;
 
-import java.util.List;
-
 /**
  * Created by Giovanni on 1/9/2022
  * <p>

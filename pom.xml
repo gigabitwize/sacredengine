@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <!-- Outdated -->
-        <module>api-old</module>
-        <module>core-old</module>
+        <module>outdated/api-old</module>
+        <module>outdated/core-old</module>
 
         <!-- Latest -->
         <module>light-engine</module>
