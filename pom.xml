@@ -8,12 +8,10 @@
     <artifactId>rpgengine</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <!-- Outdated -->
-        <module>outdated/api-old</module>
-        <module>outdated/core-old</module>
-
         <!-- Latest -->
-        <module>light-engine</module>
+        <module>api</module>
+        <module>engine</module>
+        <module>lighting</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -38,17 +36,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>com.github.Minestom</groupId>
-            <artifactId>Minestom</artifactId>
-            <version>1.18-e35015aa3c-1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                    <artifactId>shrinkwrap-resolver-depchain</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
