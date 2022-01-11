@@ -20,7 +20,7 @@ public interface LightEngine {
     Set<Volume> getVolumes();
 
     /**
-     *
+     * Returns whether lighting functionality & processing should be enabled or not.
      */
     boolean isEnabled();
 
