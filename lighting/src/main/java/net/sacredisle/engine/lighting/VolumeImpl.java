@@ -143,8 +143,8 @@ public class VolumeImpl implements Volume {
      */
     public void setMaxEmission(byte maxEmission) {
         if (this.maxEmission != maxEmission) {
-            buildLighting();
             this.maxEmission = maxEmission;
+            buildLighting();
         }
     }
 
