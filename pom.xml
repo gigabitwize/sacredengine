@@ -9,18 +9,18 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <!-- Latest -->
-        <module>engine</module>
+        <module>core</module>
+        <!-- Engine -->
         <module>api</module>
         <module>lighting</module>
         <module>model</module>
+        <module>engine</module>
     </modules>
     <packaging>pom</packaging>
-
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-
     <repositories>
         <repository>
             <id>jitpack</id>
@@ -35,7 +35,6 @@
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -43,5 +42,4 @@
             <version>31.0.1-jre</version>
         </dependency>
     </dependencies>
-
 </project>

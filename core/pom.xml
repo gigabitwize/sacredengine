@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>engine</artifactId>
-    <description>The Sacred Engine</description>
+    <artifactId>core</artifactId>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -18,13 +18,8 @@
     <dependencies>
         <dependency>
             <groupId>net.sacredisle</groupId>
-            <artifactId>model</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sacredisle</groupId>
-            <artifactId>lighting</artifactId>
-            <version>1.0</version>
+            <artifactId>engine</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

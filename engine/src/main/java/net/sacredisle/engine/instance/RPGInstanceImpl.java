@@ -44,7 +44,7 @@ public class RPGInstanceImpl extends InstanceContainer implements RPGInstance {
         for (Instance instance : MinecraftServer.getInstanceManager().getInstances()) {
             if (instance instanceof RPGInstanceImpl rpgInstance) {
                 if (rpgInstance == this) continue;
-                if(!rpgInstance.isEnabled()) continue;
+                if (!rpgInstance.isEnabled()) continue;
                 movePlayersTo(rpgInstance);
                 break;
             }
@@ -59,7 +59,7 @@ public class RPGInstanceImpl extends InstanceContainer implements RPGInstance {
             throw new InvalidInstanceException(newInstance.getClass(), "is not a valid Minestom Instance");
         if (newInstance == this)
             throw new InvalidInstanceException(newInstance.getClass(), "it's the same as the current one");
-        if(!newInstance.isEnabled())
+        if (!newInstance.isEnabled())
             throw new InvalidInstanceException(newInstance.getClass(), "is not enabled");
         getPlayers().forEach(player -> player.setInstance((Instance) newInstance, player.getPosition()));
     }
@@ -101,14 +101,23 @@ public class RPGInstanceImpl extends InstanceContainer implements RPGInstance {
         this.enabled = b;
     }
 
+    /**
+     * Returns whether building is enabled in this instnace.
+     */
     public boolean isBuildingEnabled() {
         return buildingEnabled;
     }
 
+    /**
+     * Sets whether building is enabled in this instance.
+     */
     public void setBuildingEnabled(boolean buildingEnabled) {
         this.buildingEnabled = buildingEnabled;
     }
 
+    /**
+     * Sets whether this instance can be unloaded through {@link #unload()}
+     */
     public void setCanUnload(boolean canUnload) {
         this.canUnload = canUnload;
     }
