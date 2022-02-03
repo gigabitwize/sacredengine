@@ -18,17 +18,17 @@ public class SacredServer implements ServerConnection {
 
     public static final Logger LOG = LoggerFactory.getLogger(SacredServer.class);
 
-    private final Environment environment;
-    private final int serverPort;
+    private final SacredEngine.Environment environment;
+    private final int serverPort; // TODO
     private boolean running;
-    private Server record;
+    private Server record; // TODO
 
     /**
      * @param port The port to start the SacredServer on. This port
      *             is not the same as the {@link net.minestom.server.MinecraftServer}'s port.
      *             The SacredServer and MinecraftServer run concurrrently.
      */
-    public SacredServer(Environment environment, int port) {
+    public SacredServer(SacredEngine.Environment environment, int port) {
         this.environment = environment;
         this.serverPort = port;
     }
@@ -45,7 +45,7 @@ public class SacredServer implements ServerConnection {
 
         LOG.info("Starting Sacred Server..");
         Address address;
-        if (environment == Environment.LOCAL)
+        if (environment == SacredEngine.Environment.LOCAL)
             address = new Address("localhost", 25565);
         else
             throw new ServerStartException("Environment is not supported at this time.");
@@ -60,11 +60,10 @@ public class SacredServer implements ServerConnection {
         return record;
     }
 
-
     /**
      * Returns the server's environment.
      */
-    public Environment getEnvironment() {
+    public SacredEngine.Environment getEnvironment() {
         return environment;
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="977.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane prefHeight="663.0" prefWidth="347.0" style="-fx-background-color: #1f1c1c;" />
+        <Pane layoutX="347.0" prefHeight="663.0" prefWidth="633.0" style="-fx-background-color: #232136;">
+            <children>
+                <JFXButton layoutX="331.0" layoutY="374.0" opacity="0.755" prefHeight="43.0" prefWidth="133.0" style="-fx-background-color: #5d31bd;" text="CONTINUE" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <font>
+                        <Font name="Segoe UI Bold" size="15.0" />
+                    </font>
+                </JFXButton>
+                <JFXButton layoutX="168.0" layoutY="374.0" opacity="0.755" prefHeight="43.0" prefWidth="133.0" ripplerFill="BLACK" style="-fx-background-color: #2c2c30;" text="EXIT" textFill="WHITE">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <font>
+                        <Font name="Segoe UI Bold" size="15.0" />
+                    </font>
+                </JFXButton>
+                <JFXTextArea focusColor="WHITE" layoutX="92.0" layoutY="293.0" prefHeight="0.0" prefWidth="463.0" unFocusColor="#7c7979">
+                    <font>
+                        <Font name="Segoe UI" size="12.0" />
+                    </font>
+                </JFXTextArea>
+                <Text fill="WHITE" layoutX="92.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENTER ENGINE KEY BELOW" wrappingWidth="217.23046875">
+                    <font>
+                        <Font name="Segoe UI Semibold" size="16.0" />
+                    </font>
+                </Text>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public final class SacredEngine implements Engine {
 
     public static final Logger LOG = LoggerFactory.getLogger(SacredEngine.class);
+    private static SacredEngine ENGINE;
     private final SacredServer server;
     private final MinecraftServer minecraftServer;
     private final ModelEngine modelEngine;
@@ -34,13 +35,14 @@ public final class SacredEngine implements Engine {
     private final RPGInstanceImpl defaultInstance;
 
     public SacredEngine(Environment environment) throws ServerStartException {
+        ENGINE = this;
         long bootTime = System.currentTimeMillis();
 
         LOG.info("Starting Sacred Engine..");
         server = new SacredServer(environment, 3306);
         Address minecraftAddress = server.start();
-
         minecraftServer = MinecraftServer.init();
+
         /* Default Instance */
         defaultInstance = new RPGInstanceImpl(
                 "Instance01",
@@ -68,6 +70,17 @@ public final class SacredEngine implements Engine {
         LOG.info("Sacred Engine bootstrap finished, took " + (System.currentTimeMillis() - bootTime) + "ms.");
     }
 
+    public void exit() {
+        LOG.info("Sacred Engine is stopping..");
+        // TODO
+        MinecraftServer.stopCleanly();
+        LOG.info("Goodbye!");
+    }
+
+    public static SacredEngine get() {
+        return ENGINE;
+    }
+
     /**
      * Returns the {@link SacredServer}.
      */
@@ -93,5 +106,10 @@ public final class SacredEngine implements Engine {
     @Override
     public RPGInstance getDefaultInstance() {
         return defaultInstance;
+    }
+
+    public enum Environment {
+        LOCAL,
+        PRODUCTION;
     }
 }

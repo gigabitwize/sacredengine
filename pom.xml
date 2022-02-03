@@ -8,13 +8,11 @@
     <artifactId>rpgengine</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <!-- Latest -->
-        <module>core</module>
         <!-- Engine -->
-        <module>api</module>
-        <module>lighting</module>
-        <module>model</module>
-        <module>engine</module>
+        <module>engine/api</module>
+        <module>engine/lighting</module>
+        <module>engine/model</module>
+        <module>engine/core</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
